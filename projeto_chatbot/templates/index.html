@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Operadora</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .chat-container { width: 400px; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background-color: #6200ea; color: white; padding: 15px; text-align: center; font-weight: bold; }
+        .chat-box { height: 400px; overflow-y: auto; padding: 20px; border-bottom: 1px solid #ddd; display: flex; flex-direction: column; }
+        .mensagem { margin-bottom: 15px; padding: 10px 15px; border-radius: 20px; max-width: 80%; line-height: 1.4; }
+        .usuario { background-color: #e0f7fa; color: #006064; align-self: flex-end; border-bottom-right-radius: 0; }
+        .bot { background-color: #f1f3f4; color: #202124; align-self: flex-start; border-bottom-left-radius: 0; }
+        .input-area { display: flex; padding: 15px; background-color: #fff; }
+        input[type="text"] { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; }
+        button { background-color: #6200ea; color: white; border: none; padding: 10px 20px; margin-left: 10px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="header">Atendimento - Cartões</div>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Digite sua mensagem..." autocomplete="off">
+        <button onclick="enviarMensagem()">Enviar</button>
+    </div>
+</div>
+
+<script>
+    let clienteAutenticado = false;
+
+    // Detecta o Enter no campo de texto
+    document.getElementById("userInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            enviarMensagem();
+        }
+    });
+
+    function adicionarMensagem(texto, remetente) {
+        const chatBox = document.getElementById('chatBox');
+        const div = document.createElement('div');
+        div.className = `mensagem ${remetente}`;
+        div.innerText = texto;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Mensagem inicial pedindo CPF
+    window.onload = function() {
+        adicionarMensagem("Olá! Para iniciarmos o atendimento, por favor, digite o seu CPF (apenas números):", "bot");
+    }
+
+    function enviarMensagem() {
+        const input = document.getElementById('userInput');
+        const mensagem = input.value.trim();
+        if (mensagem === '') return;
+
+        adicionarMensagem(mensagem, 'usuario');
+        input.value = '';
+
+        // FASE 1: Validação de CPF
+        if (!clienteAutenticado) {
+            fetch('/validar_cpf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cpf: mensagem })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.sucesso) {
+                    clienteAutenticado = true;
+                    adicionarMensagem(`CPF confirmado! Olá, ${data.nome}. Como posso ajudar com seu cartão hoje?`, 'bot');
+                } else {
+                    adicionarMensagem("CPF não encontrado. Por favor, verifique e digite novamente:", 'bot');
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+            return;
+        }
+        fetch('/enviar_mensagem', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mensagem: mensagem })
+        })
+        .then(response => response.json())
+        .then(data => {
+            adicionarMensagem(data.resposta, 'bot');
+        })
+        .catch(error => console.error('Erro:', error));
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+frase,categoria
+oi,saudacao
+olá,saudacao
+bom dia,saudacao
+boa tarde,saudacao
+boa noite,saudacao
+preciso de ajuda,saudacao
+como você funciona?,saudacao
+qual o valor da minha fatura,fatura
+quanto eu tenho que pagar,fatura
+me diga o valor da conta,fatura
+qual a data de vencimento,fatura
+a fatura já fechou?,fatura
+status da minha fatura,fatura
+quero pagar minha fatura,fatura
+preciso do boleto para pagar,fatura
+quero parcelar minha conta,fatura
+como faço o pagamento,fatura
+qual o meu limite,cartao_limite
+quanto de limite eu tenho disponível,cartao_limite
+meus cartões ativos,cartao_limite
+ver status do cartão,cartao_limite
+qual o limite do meu cartão,cartao_limite
+quanto ainda posso gastar,cartao_limite
+quais os finais do meu cartão,cartao_limite
+quero aumentar meu limite,seguranca_app
+pedir mais crédito,seguranca_app
+diminuir meu limite,seguranca_app
+esqueci minha senha,seguranca_app
+bloquear meu cartão agora,seguranca_app
+perdi meu cartão,seguranca_app
+fui roubado,seguranca_app
+mudar minha senha,seguranca_app
+cancelar meu cartão,seguranca_app
+quais os benefícios do cartão,atendimento_beneficios
+quero saber sobre o cashback,atendimento_beneficios
+como resgato meus pontos,atendimento_beneficios
+quero falar com um atendente,atendimento_beneficios
+passa para um humano,atendimento_beneficios
+chame o suporte,atendimento_beneficios
+qual minha ultima transação,cartao_limite
+ver minha ultima compra,cartao_limite
+onde passei o cartao por ultimo,cartao_limite
+qual foi a ultima coisa que comprei,cartao_limite
