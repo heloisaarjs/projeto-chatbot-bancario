@@ -1,4 +1,4 @@
-# Simulador de Chatbot Bancário com NLP e Python
+# Chatbot Operadora de Cartão de Crédito com NLP e Python
 
 Projeto acadêmico de um assistente virtual simulador de serviços bancários. O sistema integra Processamento de Linguagem Natural (NLP) para classificar a intenção das mensagens do usuário e realiza consultas dinâmicas em um banco de dados relacional (SQLite), fornecendo dados financeiros reais da base.
 
